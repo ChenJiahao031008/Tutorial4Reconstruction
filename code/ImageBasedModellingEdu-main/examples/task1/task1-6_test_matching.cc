@@ -23,6 +23,8 @@
 #include "visualizer.h"
 
 
+std::string output_path;
+
 core::ByteImage::Ptr
 visualize_matching (features::Matching::Result const& matching,
     core::ByteImage::Ptr image1, core::ByteImage::Ptr image2,
@@ -223,7 +225,7 @@ feature_set_matching (core::ByteImage::Ptr image1, core::ByteImage::Ptr image2)
 
     core::ByteImage::Ptr match_image = visualize_matching(
         matching, image1, image2, feat1.positions, feat2.positions);
-    std::string output_filename = "./tmp/matching_featureset.png";
+    std::string output_filename = output_path + "matching_featureset.png";
     std::cout << "Saving visualization to " << output_filename << std::endl;
     core::image::save_file(match_image, output_filename);
 }
@@ -231,9 +233,9 @@ feature_set_matching (core::ByteImage::Ptr image1, core::ByteImage::Ptr image2)
 int
 main (int argc, char** argv)
 {
-    if (argc < 3)
+    if (argc < 4)
     {
-        std::cerr << "Syntax: " << argv[0] << " image1 image2" << std::endl;
+        std::cerr << "Syntax: " << argv[0] << " image1 image2 output_path" << std::endl;
         return 1;
     }
 
@@ -250,6 +252,7 @@ main (int argc, char** argv)
     try
     {
         std::cout << "Loading " << argv[1] << "..." << std::endl;
+        output_path = std::string(argv[3]);
         image1 = core::image::load_file(std::string(argv[1]));
         // 图像尺寸减半
         image1 = core::image::rescale_half_size<uint8_t>(image1);

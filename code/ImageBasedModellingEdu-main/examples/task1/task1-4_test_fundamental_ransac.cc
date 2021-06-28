@@ -43,12 +43,6 @@ int  calc_ransac_iterations (double p,
     return 0;
 
 
-    /** Reference
-    double prob_all_good = math::fastpow(p, K);
-    double num_iterations = std::log(1.0 - z)
-                            / std::log(1.0 - prob_all_good);
-    return static_cast<int>(math::round(num_iterations));
-     */
 
 }
 
@@ -175,14 +169,6 @@ std::vector<int> find_inliers(sfm::Correspondences2D2D const & matches
      *
      * Coding here **/
 
-    /** Reference
-    for(int i=0; i< matches.size(); i++){
-        double error = calc_sampson_distance(F, matches[i]);
-        if(error< squared_thresh){
-            inliers.push_back(i);
-        }
-    }
-     **/
     return inliers;
 }
 

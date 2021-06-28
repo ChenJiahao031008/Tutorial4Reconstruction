@@ -27,7 +27,6 @@ void
 RansacPoseP3P::estimate (Correspondences2D3D const& corresp,
     math::Matrix<double, 3, 3> const& k_matrix, Result* result) const{
 
-    //std::cout<<"intrisict matrix: "<<k_matrix<<std::endl;
 
     if (this->opts.verbose_output){
         std::cout << "RANSAC-3: Running for " << this->opts.max_iterations
@@ -37,7 +36,7 @@ RansacPoseP3P::estimate (Correspondences2D3D const& corresp,
 
     /* Pre-compute inverse K matrix to compute directions from corresp. */
     math::Matrix<double, 3, 3> inv_k_matrix = math::matrix_inverse(k_matrix);
-    std::atomic<int> num_iterations;
+    std::atomic<int> num_iterations(0);
 
 #pragma omp parallel
     {
